@@ -909,6 +909,7 @@ export default function Home() {
           <ul className="nav-links">
             <li><a href="#wie-es-funktioniert">Wie es funktioniert</a></li>
             <li><a href="#preise">Preise</a></li>
+            <li><a href="/faq">FAQ</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
           </ul>
           <a href="#kontakt" className="nav-cta">Demo anfragen</a>
@@ -1140,6 +1141,7 @@ export default function Home() {
           <ul className="footer-links">
             <li><a href="/impressum">Impressum</a></li>
             <li><a href="/datenschutz">Datenschutz</a></li>
+            <li><a href="/faq">FAQ</a></li>
             <li><a href="mailto:team.restaurantiq@gmail.com">team.restaurantiq@gmail.com</a></li>
           </ul>
           <div className="footer-copy">© 2026 Benjamin Zielbauer · RestaurantIQ</div>
