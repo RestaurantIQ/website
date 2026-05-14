@@ -21,21 +21,29 @@ export default function Impressum() {
       </nav>
       <div className="wrap">
         <h1>Impressum</h1>
+
         <h2>Angaben gemäß § 5 TMG</h2>
         <p>
-          [GESELLSCHAFTER 1] und [GESELLSCHAFTER 2]<br />
-          Zielbauer &amp; Winkler GbR<br />
-          [STRASSE NR]<br />
-          [PLZ] [STADT]
+          Benjamin Zielbauer<br />
+          Waldhornstr. 6<br />
+          68804 Altlußheim
         </p>
+
         <h2>Kontakt</h2>
-        <p>E-Mail: team.restaurantiq@gmail.com</p>
-        <h2>Umsatzsteuer-ID</h2>
-        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: [UST-IDNR]</p>
+        <p>
+          E-Mail: team.restaurantiq@gmail.com
+        </p>
+
+        <h2>Steuernummer</h2>
+        <p>Wird nach Gewerbeanmeldung ergänzt.</p>
+
         <h2>Technischer Betrieb</h2>
-        <p>RestaurantIQ wird betrieben von der Zielbauer &amp; Winkler GbR. Hosting über Vercel Inc., San Francisco, USA.</p>
+        <p>RestaurantIQ wird betrieben von Benjamin Zielbauer. Hosting über Vercel Inc., 340 Pine Street Suite 701, San Francisco, California 94104, USA.</p>
+
+        <h2>Streitschlichtung</h2>
+        <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a>.<br />Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
       </div>
-      <footer>© 2026 Zielbauer &amp; Winkler GbR · RestaurantIQ</footer>
+      <footer>© 2026 Benjamin Zielbauer · RestaurantIQ</footer>
     </>
   );
 }
