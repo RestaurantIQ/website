@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 
 export default function Home() {
   const [form, setForm] = useState({ restaurant: '', email: '', message: '' });
