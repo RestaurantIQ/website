@@ -38,7 +38,7 @@ export default function Home() {
           --ink-2:  #3d3d3f;
           --muted:  #6e6e73;
           --gold:   #a8864a;
-          --line:   #d2d2d7;
+          --line:   #e0e0e5;
           --r:      12px;
         }
 
@@ -137,7 +137,7 @@ export default function Home() {
           font-weight: 500;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: var(--gold);
+          color: var(--muted);
           margin-bottom: 24px;
         }
 
@@ -235,7 +235,7 @@ export default function Home() {
           font-weight: 500;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: var(--gold);
+          color: var(--muted);
           margin-bottom: 16px;
         }
 
@@ -369,7 +369,7 @@ export default function Home() {
           width: 5px;
           height: 5px;
           border-radius: 50%;
-          background: var(--gold);
+          background: var(--muted);
           flex-shrink: 0;
         }
 
@@ -516,7 +516,7 @@ export default function Home() {
           width: 16px;
           height: 16px;
           border-radius: 50%;
-          background: rgba(168,134,74,0.15);
+          background: rgba(29,29,31,0.08);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -528,13 +528,18 @@ export default function Home() {
           content: '';
           width: 5px;
           height: 3px;
-          border-left: 1.5px solid var(--gold);
-          border-bottom: 1.5px solid var(--gold);
+          border-left: 1.5px solid var(--ink);
+          border-bottom: 1.5px solid var(--ink);
           transform: rotate(-45deg) translateY(-1px);
         }
 
         .price-card.pro .price-check {
-          background: rgba(168,134,74,0.25);
+          background: rgba(255,255,255,0.15);
+        }
+
+        .price-card.pro .price-check::after {
+          border-left-color: #fff;
+          border-bottom-color: #fff;
         }
 
         .btn-price {
