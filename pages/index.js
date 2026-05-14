@@ -844,6 +844,11 @@ export default function Home() {
             bottom: 20px;
             right: 16px;
           }
+          .widget-btn.is-open {
+            bottom: auto;
+            top: 16px;
+            right: 16px;
+          }
         }
       `}</style>
 
@@ -1107,7 +1112,7 @@ export default function Home() {
       </div>
 
       <button
-        className="widget-btn"
+        className={`widget-btn${widgetOpen ? ' is-open' : ''}`}
         onClick={() => setWidgetOpen(o => !o)}
         aria-label={widgetOpen ? 'Chat schließen' : 'Demo ausprobieren'}
       >
