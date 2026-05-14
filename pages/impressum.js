@@ -31,6 +31,7 @@ export default function Impressum() {
 
         <h2>Kontakt</h2>
         <p>
+          Telefon: +49 178 4186496<br />
           E-Mail: team.restaurantiq@gmail.com
         </p>
 
