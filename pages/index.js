@@ -27,7 +27,7 @@ export default function Home() {
       </Head>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -142,13 +142,13 @@ export default function Home() {
         }
 
         .hero h1 {
-          font-family: 'Cormorant', Georgia, serif;
-          font-size: clamp(42px, 7vw, 72px);
-          font-weight: 400;
-          line-height: 1.1;
-          letter-spacing: -0.01em;
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(38px, 6vw, 64px);
+          font-weight: 700;
+          line-height: 1.08;
+          letter-spacing: -0.03em;
           color: var(--ink);
-          max-width: 800px;
+          max-width: 780px;
           margin: 0 auto 24px;
         }
 
@@ -204,25 +204,87 @@ export default function Home() {
 
         .hero-visual {
           margin-top: 72px;
-          max-width: 900px;
+          max-width: 760px;
           margin-left: auto;
           margin-right: auto;
-          border-radius: 16px;
+          border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 32px 80px rgba(0,0,0,0.12), 0 0 0 1px var(--line);
-          background: #f0ebe0;
+          box-shadow: 0 40px 100px rgba(0,0,0,0.13), 0 0 0 1px var(--line);
+          background: #ffffff;
         }
 
-        .hero-visual iframe {
-          width: 100%;
-          height: 560px;
-          border: none;
-          display: block;
+        .mockup-bar {
+          background: #f5f5f7;
+          padding: 14px 18px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          border-bottom: 1px solid var(--line);
         }
 
-        @media (max-width: 600px) {
-          .hero-visual iframe { height: 420px; }
+        .mockup-dot {
+          width: 10px; height: 10px;
+          border-radius: 50%;
         }
+
+        .mockup-messages {
+          padding: 28px 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          min-height: 340px;
+        }
+
+        .mockup-msg {
+          max-width: 76%;
+          padding: 11px 16px;
+          border-radius: 18px;
+          font-size: 14px;
+          line-height: 1.55;
+          font-weight: 400;
+        }
+
+        .mockup-msg.bot {
+          background: #f5f5f7;
+          color: var(--ink);
+          border-radius: 4px 18px 18px 18px;
+          align-self: flex-start;
+        }
+
+        .mockup-msg.user {
+          background: var(--ink);
+          color: #fff;
+          border-radius: 18px 4px 18px 18px;
+          align-self: flex-end;
+        }
+
+        .mockup-input {
+          border-top: 1px solid var(--line);
+          padding: 14px 20px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: #fff;
+        }
+
+        .mockup-input-bar {
+          flex: 1;
+          background: #f5f5f7;
+          border-radius: 999px;
+          padding: 9px 16px;
+          font-size: 13px;
+          color: var(--muted);
+        }
+
+        .mockup-send {
+          width: 32px; height: 32px;
+          border-radius: 50%;
+          background: var(--ink);
+          display: flex; align-items: center; justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .mockup-send svg { width: 13px; height: 13px; fill: #fff; }
 
         /* ── PROBLEM ── */
         .problem {
@@ -240,10 +302,11 @@ export default function Home() {
         }
 
         .section-title {
-          font-family: 'Cormorant', Georgia, serif;
-          font-size: clamp(30px, 4vw, 44px);
-          font-weight: 400;
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(26px, 3.5vw, 40px);
+          font-weight: 700;
           line-height: 1.15;
+          letter-spacing: -0.02em;
           color: var(--ink);
           max-width: 600px;
           margin-bottom: 56px;
@@ -721,11 +784,24 @@ export default function Home() {
             <a href="#kontakt" className="btn-secondary">Gespräch vereinbaren</a>
           </div>
           <div className="hero-visual">
-            <iframe
-              src="https://restaurant-iq-demo.vercel.app"
-              title="RestaurantIQ Live Demo"
-              loading="lazy"
-            />
+            <div className="mockup-bar">
+              <div className="mockup-dot" style={{background:'#ff5f57'}} />
+              <div className="mockup-dot" style={{background:'#febc2e'}} />
+              <div className="mockup-dot" style={{background:'#28c840'}} />
+            </div>
+            <div className="mockup-messages">
+              <div className="mockup-msg bot">Guten Abend! Wie kann ich Ihnen helfen? Ich nehme gerne eine Reservierung für Sie auf.</div>
+              <div className="mockup-msg user">Ich würde gerne einen Tisch für Samstag reservieren.</div>
+              <div className="mockup-msg bot">Sehr gerne. Für wie viele Personen darf ich einplanen?</div>
+              <div className="mockup-msg user">Wir sind zu viert.</div>
+              <div className="mockup-msg bot">Perfekt. Zu welcher Uhrzeit möchten Sie kommen?</div>
+            </div>
+            <div className="mockup-input">
+              <div className="mockup-input-bar">Ihre Antwort…</div>
+              <div className="mockup-send">
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+              </div>
+            </div>
           </div>
         </div>
       </section>
