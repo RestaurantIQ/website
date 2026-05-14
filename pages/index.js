@@ -943,7 +943,7 @@ export default function Home() {
           <div className="trust-strip">
             <span className="trust-item"><span className="trust-dot" />Einrichtung in unter einem Tag</span>
             <span className="trust-item"><span className="trust-dot" />Kein technisches Wissen nötig</span>
-            <span className="trust-item"><span className="trust-dot" />Monatlich kündbar</span>
+            <span className="trust-item"><span className="trust-dot" />1 Monat kostenlos testen</span>
           </div>
         </div>
       </section>
@@ -987,38 +987,33 @@ export default function Home() {
         <div className="container">
           <div className="section-label">Preise</div>
           <h2 className="section-title">Transparent. Ohne Überraschungen.</h2>
-          <div className="pricing-grid">
-            <div className="price-card">
-              <div className="price-name">Starter</div>
-              <div className="price-amount">79€</div>
-              <div className="price-period">pro Monat</div>
+          <div style={{maxWidth:520,margin:'56px auto 0'}}>
+            <div className="price-card pro" style={{position:'relative'}}>
+              <div className="price-badge">Alles inklusive</div>
+              <div className="price-name">Monatliche Pauschale</div>
+              <div className="price-amount">59€</div>
+              <div className="price-period" style={{marginBottom:6}}>pro Monat</div>
+              <div style={{fontSize:13,color:'rgba(255,255,255,0.45)',marginBottom:28}}>zzgl. 199 € Einrichtung (einmalig)</div>
               <div className="price-divider" />
               <ul className="price-features">
                 <li><span className="price-check" />KI-Assistent auf Ihrer Website</li>
-                <li><span className="price-check" />Admin-Dashboard</li>
-                <li><span className="price-check" />E-Mail-Benachrichtigungen</li>
-                <li><span className="price-check" />Automatische Gästebestätigung</li>
-                <li><span className="price-check" />Bis zu 200 Reservierungen pro Monat</li>
-              </ul>
-              <a href="#kontakt" className="btn-price btn-price-outline">Demo anfragen</a>
-            </div>
-            <div className="price-card pro">
-              <div className="price-badge">Empfohlen</div>
-              <div className="price-name">Pro</div>
-              <div className="price-amount">149€</div>
-              <div className="price-period">pro Monat</div>
-              <div className="price-divider" />
-              <ul className="price-features">
-                <li><span className="price-check" />Alles aus Starter</li>
-                <li><span className="price-check" />Einbettbares Website-Widget</li>
-                <li><span className="price-check" />Kalender-Verwaltung mit Sperrtagen</li>
+                <li><span className="price-check" />Admin-Dashboard mit Kalender</li>
+                <li><span className="price-check" />E-Mail-Benachrichtigungen in Echtzeit</li>
+                <li><span className="price-check" />Automatische Bestätigung an den Gast</li>
                 <li><span className="price-check" />Unbegrenzte Reservierungen</li>
-                <li><span className="price-check" />Bevorzugter Support</li>
+                <li><span className="price-check" />Einrichtung & persönliche Einweisung</li>
               </ul>
-              <a href="#kontakt" className="btn-price btn-price-gold">Demo anfragen</a>
+              <a href="#kontakt" className="btn-price btn-price-gold">Jetzt anfragen</a>
+            </div>
+            <div style={{display:'flex',justifyContent:'center',gap:32,marginTop:20,flexWrap:'wrap'}}>
+              {['1 Monat kostenlos testen','Danach quartalsweise kündbar','Zahlung per Rechnung'].map(t => (
+                <span key={t} style={{fontSize:12,color:'var(--muted)',display:'flex',alignItems:'center',gap:6}}>
+                  <span style={{width:4,height:4,borderRadius:'50%',background:'var(--muted)',display:'inline-block',flexShrink:0}} />
+                  {t}
+                </span>
+              ))}
             </div>
           </div>
-          <p className="pricing-note">Einmalige Einrichtung 299 € &nbsp;·&nbsp; 30 Tage kostenlos testen &nbsp;·&nbsp; Monatlich kündbar</p>
         </div>
       </section>
 
@@ -1125,3 +1120,4 @@ export default function Home() {
     </>
   );
 }
+
