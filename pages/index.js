@@ -1,11 +1,19 @@
 import { useState } from 'react';
 import Head from 'next/head';
 
+const DASH_TABS = [
+  { label: 'Übersicht', img: '/dash-1.png', caption: 'Heutige Reservierungen, offene Anfragen und die nächste Buchung – immer im Blick.' },
+  { label: 'Reservierungen', img: '/dash-2.png', caption: 'Alle Buchungen gefiltert nach Tag und Status – mit einem Klick bestätigen oder absagen.' },
+  { label: 'Kalender', img: '/dash-3.png', caption: 'Monatsansicht: Orange = neue Anfrage, Grün = bestätigt. Auf einen Tag klicken zum Verwalten.' },
+  { label: 'Verfügbarkeit', img: '/dash-4.png', caption: 'Öffnungszeiten und Tischanzahl pro Schicht selbst pflegen – wird automatisch gespeichert.' },
+];
+
 export default function Home() {
   const [form, setForm] = useState({ restaurant: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [widgetOpen, setWidgetOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -485,6 +493,160 @@ export default function Home() {
           line-height: 1.7;
         }
 
+        /* ── DASHBOARD SHOWCASE ── */
+        .dashboard {
+          padding: 100px 0 120px;
+          background: #080808;
+        }
+
+        .dashboard .section-label {
+          color: rgba(255,255,255,0.35);
+        }
+
+        .dashboard .section-title {
+          color: #fff;
+          margin-bottom: 0;
+        }
+
+        .dashboard-subtitle {
+          margin-top: 16px;
+          font-size: 16px;
+          font-weight: 300;
+          color: rgba(255,255,255,0.45);
+          line-height: 1.65;
+          max-width: 520px;
+        }
+
+        .dashboard-stage {
+          margin-top: 56px;
+        }
+
+        /* Browser chrome */
+        .browser-window {
+          border-radius: 14px;
+          overflow: hidden;
+          box-shadow:
+            0 0 0 1px rgba(255,255,255,0.09),
+            0 40px 100px rgba(0,0,0,0.7),
+            0 8px 24px rgba(0,0,0,0.4);
+          background: #1a1a1a;
+        }
+
+        .browser-chrome {
+          background: #2c2c2e;
+          padding: 12px 16px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          border-bottom: 1px solid rgba(255,255,255,0.07);
+          flex-shrink: 0;
+        }
+
+        .browser-dots {
+          display: flex;
+          gap: 6px;
+          flex-shrink: 0;
+        }
+
+        .browser-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+        }
+
+        .browser-bar {
+          flex: 1;
+          background: rgba(255,255,255,0.07);
+          border-radius: 6px;
+          height: 24px;
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+          max-width: 380px;
+          margin: 0 auto;
+        }
+
+        .browser-bar-text {
+          font-size: 11px;
+          color: rgba(255,255,255,0.25);
+          font-family: 'Inter', sans-serif;
+          letter-spacing: 0.01em;
+        }
+
+        .browser-screenshot {
+          width: 100%;
+          display: block;
+          aspect-ratio: 16 / 9;
+          object-fit: cover;
+          object-position: top left;
+          background: #1d1d1f;
+        }
+
+        /* Tab bar below browser */
+        .dash-tabs {
+          display: flex;
+          gap: 4px;
+          margin-top: 20px;
+          flex-wrap: wrap;
+        }
+
+        .dash-tab {
+          flex: 1;
+          min-width: 120px;
+          padding: 12px 16px;
+          border-radius: 10px;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.04);
+          cursor: pointer;
+          transition: background 0.15s, border-color 0.15s;
+          text-align: left;
+        }
+
+        .dash-tab:hover {
+          background: rgba(255,255,255,0.07);
+          border-color: rgba(255,255,255,0.14);
+        }
+
+        .dash-tab.active {
+          background: rgba(255,255,255,0.1);
+          border-color: rgba(255,255,255,0.22);
+        }
+
+        .dash-tab-label {
+          font-size: 12px;
+          font-weight: 500;
+          color: rgba(255,255,255,0.5);
+          letter-spacing: 0.02em;
+          margin-bottom: 4px;
+          text-transform: uppercase;
+          font-size: 10px;
+        }
+
+        .dash-tab.active .dash-tab-label {
+          color: rgba(255,255,255,0.75);
+        }
+
+        .dash-tab-caption {
+          font-size: 12px;
+          font-weight: 300;
+          color: rgba(255,255,255,0.3);
+          line-height: 1.5;
+          display: none;
+        }
+
+        @media (min-width: 640px) {
+          .dash-tab-caption { display: block; }
+        }
+
+        .dash-tab.active .dash-tab-caption {
+          color: rgba(255,255,255,0.5);
+        }
+
+        @media (max-width: 640px) {
+          .dash-tabs { gap: 8px; }
+          .dash-tab { min-width: calc(50% - 4px); flex: none; }
+        }
+
         /* ── PRICING ── */
         .pricing {
           padding: 100px 0;
@@ -538,12 +700,12 @@ export default function Home() {
         .price-card.pro .price-name { color: #fff; }
 
         .price-amount {
-          font-family: 'Cormorant', Georgia, serif;
           font-size: 52px;
-          font-weight: 400;
+          font-weight: 700;
           color: var(--ink);
           line-height: 1;
           margin-bottom: 4px;
+          letter-spacing: -0.03em;
         }
 
         .price-card.pro .price-amount { color: #fff; }
@@ -1099,6 +1261,52 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── DASHBOARD SHOWCASE ── */}
+      <section className="dashboard" id="dashboard">
+        <div className="container">
+          <div className="section-label">Das Admin-Panel</div>
+          <h2 className="section-title">Alle Buchungen auf einen Blick.</h2>
+          <p className="dashboard-subtitle">
+            Ihr persönliches Dashboard zeigt neue Anfragen, bestätigte Reservierungen und den Monatskalender –
+            übersichtlich und von überall erreichbar.
+          </p>
+
+          <div className="dashboard-stage">
+            <div className="browser-window">
+              <div className="browser-chrome">
+                <div className="browser-dots">
+                  <div className="browser-dot" style={{background:'#ff5f57'}} />
+                  <div className="browser-dot" style={{background:'#febc2e'}} />
+                  <div className="browser-dot" style={{background:'#28c840'}} />
+                </div>
+                <div className="browser-bar">
+                  <span className="browser-bar-text">restaurant-iq.vercel.app/admin</span>
+                </div>
+              </div>
+              <img
+                className="browser-screenshot"
+                src={DASH_TABS[activeTab].img}
+                alt={`Admin Panel – ${DASH_TABS[activeTab].label}`}
+                key={activeTab}
+              />
+            </div>
+
+            <div className="dash-tabs">
+              {DASH_TABS.map((tab, i) => (
+                <button
+                  key={i}
+                  className={`dash-tab${activeTab === i ? ' active' : ''}`}
+                  onClick={() => setActiveTab(i)}
+                >
+                  <div className="dash-tab-label">{tab.label}</div>
+                  <div className="dash-tab-caption">{tab.caption}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── PRICING ── */}
       <section className="pricing" id="preise">
         <div className="container">
@@ -1280,4 +1488,3 @@ export default function Home() {
     </>
   );
 }
-
