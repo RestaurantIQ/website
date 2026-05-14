@@ -56,10 +56,10 @@ export default function Home() {
           position: sticky;
           top: 0;
           z-index: 100;
-          background: rgba(255,255,255,0.85);
+          background: rgba(0,0,0,0.92);
           backdrop-filter: saturate(180%) blur(20px);
           -webkit-backdrop-filter: saturate(180%) blur(20px);
-          border-bottom: 1px solid var(--line);
+          border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .nav-inner {
@@ -90,26 +90,26 @@ export default function Home() {
         .nav-links a {
           font-size: 13px;
           font-weight: 400;
-          color: var(--ink-2);
+          color: rgba(255,255,255,0.65);
           text-decoration: none;
           letter-spacing: 0.01em;
           transition: color 0.15s;
         }
 
-        .nav-links a:hover { color: var(--ink); }
+        .nav-links a:hover { color: #fff; }
 
         .nav-cta {
-          background: var(--ink);
-          color: #fff !important;
+          background: #fff;
+          color: #000 !important;
           padding: 8px 18px;
           border-radius: 980px;
           font-size: 13px !important;
-          font-weight: 500 !important;
+          font-weight: 600 !important;
           white-space: nowrap;
           transition: opacity 0.15s !important;
         }
 
-        .nav-cta:hover { opacity: 0.8; }
+        .nav-cta:hover { opacity: 0.85; }
 
         @media (max-width: 680px) {
           .nav-links { display: none; }
@@ -126,9 +126,9 @@ export default function Home() {
 
         /* ── HERO ── */
         .hero {
-          padding: 100px 0 80px;
+          padding: 100px 0 100px;
           text-align: center;
-          background: var(--bg);
+          background: #000;
         }
 
         .hero-label {
@@ -137,25 +137,25 @@ export default function Home() {
           font-weight: 500;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: var(--muted);
+          color: rgba(255,255,255,0.4);
           margin-bottom: 24px;
         }
 
         .hero h1 {
           font-family: 'Inter', sans-serif;
-          font-size: clamp(38px, 6vw, 64px);
+          font-size: clamp(38px, 6vw, 68px);
           font-weight: 700;
           line-height: 1.08;
           letter-spacing: -0.03em;
-          color: var(--ink);
-          max-width: 780px;
+          color: #fff;
+          max-width: 820px;
           margin: 0 auto 24px;
         }
 
         .hero p {
           font-size: clamp(16px, 2.5vw, 19px);
           font-weight: 300;
-          color: var(--muted);
+          color: rgba(255,255,255,0.55);
           line-height: 1.65;
           max-width: 560px;
           margin: 0 auto 40px;
@@ -170,36 +170,36 @@ export default function Home() {
         }
 
         .btn-primary {
-          background: var(--ink);
-          color: #fff;
+          background: #fff;
+          color: #000;
           padding: 14px 28px;
           border-radius: 980px;
           font-size: 15px;
-          font-weight: 500;
+          font-weight: 600;
           text-decoration: none;
           transition: opacity 0.15s;
           border: none;
           cursor: pointer;
         }
 
-        .btn-primary:hover { opacity: 0.8; }
+        .btn-primary:hover { opacity: 0.85; }
 
         .btn-secondary {
           background: transparent;
-          color: var(--ink);
+          color: rgba(255,255,255,0.8);
           padding: 14px 28px;
           border-radius: 980px;
           font-size: 15px;
           font-weight: 500;
           text-decoration: none;
-          border: 1px solid var(--line);
-          transition: border-color 0.15s, background 0.15s;
+          border: 1px solid rgba(255,255,255,0.2);
+          transition: border-color 0.15s, color 0.15s;
           cursor: pointer;
         }
 
         .btn-secondary:hover {
-          border-color: var(--ink);
-          background: var(--bg-alt);
+          border-color: rgba(255,255,255,0.5);
+          color: #fff;
         }
 
         .hero-visual {
@@ -209,7 +209,7 @@ export default function Home() {
           margin-right: auto;
           border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 40px 100px rgba(0,0,0,0.13), 0 0 0 1px var(--line);
+          box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
           background: #ffffff;
         }
 
