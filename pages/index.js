@@ -655,11 +655,75 @@ export default function Home() {
         }
 
         .contact-inner {
-          max-width: 560px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: start;
+        }
+
+        @media (max-width: 800px) {
+          .contact-inner {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+        }
+
+        .contact-info { }
+
+        .contact-channels {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 32px;
+        }
+
+        .contact-channel {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          background: var(--bg);
+          border: 1px solid var(--line);
+          border-radius: var(--r);
+          padding: 16px 20px;
+          text-decoration: none;
+          transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .contact-channel:hover {
+          border-color: var(--ink);
+          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .contact-channel-icon {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          flex-shrink: 0;
+        }
+
+        .contact-channel-text { }
+
+        .contact-channel-label {
+          font-size: 11px;
+          font-weight: 500;
+          color: var(--muted);
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          margin-bottom: 2px;
+        }
+
+        .contact-channel-value {
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--ink);
         }
 
         .contact form {
-          margin-top: 40px;
+          margin-top: 0;
           display: flex;
           flex-direction: column;
           gap: 16px;
@@ -1074,62 +1138,95 @@ export default function Home() {
       <section className="contact" id="kontakt">
         <div className="container">
           <div className="contact-inner">
-            <div className="section-label">Kontakt</div>
-            <h2 className="section-title">Wir richten es gemeinsam ein.</h2>
-            <p style={{ fontSize: 16, fontWeight: 300, color: 'var(--muted)', lineHeight: 1.7, marginBottom: 0 }}>
-              Schreiben Sie uns kurz. Wir melden uns innerhalb eines Werktags und zeigen Ihnen in einem kurzen Gespräch wie RestaurantIQ für Ihr Restaurant aussieht.
-            </p>
-            {status === 'sent' ? (
-              <div className="form-status sent" style={{ marginTop: 40, fontSize: 16 }}>
-                Vielen Dank. Wir melden uns in Kürze bei Ihnen.
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="field">
-                  <label>Name des Restaurants</label>
-                  <input
-                    type="text"
-                    placeholder="Ristorante Bella Vista"
-                    required
-                    value={form.restaurant}
-                    onChange={e => setForm({ ...form, restaurant: e.target.value })}
-                  />
-                </div>
-                <div className="field">
-                  <label>Ihre E-Mail</label>
-                  <input
-                    type="email"
-                    placeholder="mario@example.de"
-                    required
-                    value={form.email}
-                    onChange={e => setForm({ ...form, email: e.target.value })}
-                  />
-                </div>
-                <div className="field">
-                  <label>Nachricht (optional)</label>
-                  <textarea
-                    rows={4}
-                    placeholder="Was interessiert Sie besonders?"
-                    value={form.message}
-                    onChange={e => setForm({ ...form, message: e.target.value })}
-                  />
-                </div>
-                <div className="form-submit">
-                  <button
-                    type="submit"
-                    className="btn-primary"
-                    disabled={status === 'sending'}
-                  >
-                    {status === 'sending' ? 'Wird gesendet...' : 'Demo anfragen'}
-                  </button>
-                </div>
-                {status === 'error' && (
-                  <div className="form-status error">
-                    Etwas ist schiefgelaufen. Schreiben Sie uns direkt an team.restaurantiq@gmail.com.
+
+            {/* LEFT: info + channels */}
+            <div className="contact-info">
+              <div className="section-label">Kontakt</div>
+              <h2 className="section-title">Wir richten es gemeinsam ein.</h2>
+              <p style={{ fontSize: 15, fontWeight: 300, color: 'var(--muted)', lineHeight: 1.75 }}>
+                Rufen Sie uns an, schreiben Sie uns auf WhatsApp oder schicken Sie kurz eine Nachricht. Wir melden uns am selben Tag.
+              </p>
+              <div className="contact-channels">
+                <a className="contact-channel" href="tel:+4917841864965">
+                  <div className="contact-channel-icon" style={{ background: '#f0f0f5' }}>📞</div>
+                  <div className="contact-channel-text">
+                    <div className="contact-channel-label">Telefon</div>
+                    <div className="contact-channel-value">+49 178 4186496</div>
                   </div>
-                )}
-              </form>
-            )}
+                </a>
+                <a className="contact-channel" href="https://wa.me/4917841864965" target="_blank" rel="noopener noreferrer">
+                  <div className="contact-channel-icon" style={{ background: '#e8f8f0' }}>💬</div>
+                  <div className="contact-channel-text">
+                    <div className="contact-channel-label">WhatsApp</div>
+                    <div className="contact-channel-value">Nachricht schreiben</div>
+                  </div>
+                </a>
+                <a className="contact-channel" href="mailto:team.restaurantiq@gmail.com">
+                  <div className="contact-channel-icon" style={{ background: '#f5f0ff' }}>✉️</div>
+                  <div className="contact-channel-text">
+                    <div className="contact-channel-label">E-Mail</div>
+                    <div className="contact-channel-value">team.restaurantiq@gmail.com</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            {/* RIGHT: form */}
+            <div>
+              {status === 'sent' ? (
+                <div className="form-status sent" style={{ fontSize: 16, marginTop: 8 }}>
+                  Vielen Dank. Wir melden uns in Kürze bei Ihnen.
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <div className="field">
+                    <label>Name des Restaurants</label>
+                    <input
+                      type="text"
+                      placeholder="Ristorante Bella Vista"
+                      required
+                      value={form.restaurant}
+                      onChange={e => setForm({ ...form, restaurant: e.target.value })}
+                    />
+                  </div>
+                  <div className="field">
+                    <label>Ihre E-Mail</label>
+                    <input
+                      type="email"
+                      placeholder="mario@example.de"
+                      required
+                      value={form.email}
+                      onChange={e => setForm({ ...form, email: e.target.value })}
+                    />
+                  </div>
+                  <div className="field">
+                    <label>Nachricht (optional)</label>
+                    <textarea
+                      rows={4}
+                      placeholder="Was interessiert Sie besonders?"
+                      value={form.message}
+                      onChange={e => setForm({ ...form, message: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-submit">
+                    <button
+                      type="submit"
+                      className="btn-primary"
+                      disabled={status === 'sending'}
+                      style={{ color: '#000' }}
+                    >
+                      {status === 'sending' ? 'Wird gesendet...' : 'Nachricht senden'}
+                    </button>
+                  </div>
+                  {status === 'error' && (
+                    <div className="form-status error">
+                      Etwas ist schiefgelaufen. Rufen Sie uns einfach an.
+                    </div>
+                  )}
+                </form>
+              )}
+            </div>
+
           </div>
         </div>
       </section>
