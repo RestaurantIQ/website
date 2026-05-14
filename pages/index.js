@@ -866,10 +866,7 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="hero">
         <div className="container">
-          <div style={{display:'inline-flex',alignItems:'center',gap:8,background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.15)',borderRadius:999,padding:'7px 16px',marginBottom:28}}>
-            <span style={{width:7,height:7,borderRadius:'50%',background:'#4cd964',display:'inline-block',flexShrink:0,boxShadow:'0 0 6px #4cd964'}} />
-            <span style={{fontSize:13,fontWeight:500,color:'rgba(255,255,255,0.85)',letterSpacing:'0.01em'}}>Den ersten Monat kostenlos testen</span>
-          </div>
+          <span className="hero-label">KI-Reservierungssystem</span>
           <h1>Ihr Restaurant ist ab sofort rund um die Uhr erreichbar.</h1>
           <p>RestaurantIQ beantwortet Reservierungsanfragen automatisch. Per KI, auf Deutsch, direkt auf Ihrer Website. Sie bestätigen mit einem Klick.</p>
           <div className="hero-actions">
@@ -991,17 +988,10 @@ export default function Home() {
           <div className="section-label">Preise</div>
           <h2 className="section-title">Transparent. Ohne Überraschungen.</h2>
           <div style={{maxWidth:520,margin:'56px auto 0'}}>
-            <div className="price-card pro" style={{position:'relative',overflow:'hidden'}}>
-              {/* Gratis-Banner oben */}
-              <div style={{background:'#4cd964',color:'#000',fontWeight:700,fontSize:12,letterSpacing:'0.08em',textTransform:'uppercase',textAlign:'center',padding:'8px 0',margin:'-40px -36px 28px',borderRadius:'var(--r) var(--r) 0 0'}}>
-                Erster Monat kostenlos
-              </div>
+            <div className="price-card pro" style={{position:'relative'}}>
               <div className="price-badge">Alles inklusive</div>
               <div className="price-name">Monatliche Pauschale</div>
-              <div style={{display:'flex',alignItems:'baseline',gap:8,margin:'8px 0 4px'}}>
-                <div className="price-amount">59€</div>
-                <div style={{fontSize:14,color:'rgba(255,255,255,0.5)',textDecoration:'line-through'}}>ab Monat 2</div>
-              </div>
+              <div className="price-amount">59€</div>
               <div className="price-period" style={{marginBottom:4}}>pro Monat · danach quartalsweise kündbar</div>
               <div style={{fontSize:13,color:'rgba(255,255,255,0.45)',marginBottom:28}}>zzgl. 199 € Einrichtung (einmalig)</div>
               <div className="price-divider" />
@@ -1013,7 +1003,7 @@ export default function Home() {
                 <li><span className="price-check" />Unbegrenzte Reservierungen</li>
                 <li><span className="price-check" />Einrichtung & persönliche Einweisung</li>
               </ul>
-              <a href="#kontakt" className="btn-price btn-price-gold" style={{fontSize:15,padding:'14px 24px'}}>Jetzt kostenlos starten</a>
+              <a href="#kontakt" className="btn-price btn-price-gold" style={{fontSize:15,padding:'14px 24px'}}>Jetzt Gratis testen</a>
             </div>
             <div style={{display:'flex',justifyContent:'center',gap:32,marginTop:20,flexWrap:'wrap'}}>
               {['Zahlung erst ab Monat 2','Danach quartalsweise kündbar','Rechnung per E-Mail'].map(t => (
