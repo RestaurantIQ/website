@@ -74,10 +74,17 @@ export default function Home() {
         }
 
         .nav-logo {
-          height: 36px;
+          height: 32px;
           width: auto;
           object-fit: contain;
-          object-position: center center;
+          filter: brightness(0) invert(1);
+        }
+
+        .nav-wordmark {
+          font-size: 15px;
+          font-weight: 600;
+          color: #fff;
+          letter-spacing: -0.01em;
         }
 
         .nav-links {
@@ -763,13 +770,16 @@ export default function Home() {
       {/* ── NAV ── */}
       <nav>
         <div className="nav-inner">
-          <img src="/logo.png" alt="RestaurantIQ" className="nav-logo" />
+          <a href="/" style={{display:'flex',alignItems:'center',gap:'10px',textDecoration:'none'}}>
+            <img src="/logo.png" alt="RestaurantIQ" className="nav-logo" />
+            <span className="nav-wordmark">RestaurantIQ</span>
+          </a>
           <ul className="nav-links">
             <li><a href="#wie-es-funktioniert">Wie es funktioniert</a></li>
             <li><a href="#preise">Preise</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
-            <li><a href="#kontakt" className="nav-cta">Demo anfragen</a></li>
           </ul>
+          <a href="#kontakt" className="nav-cta">Demo anfragen</a>
         </div>
       </nav>
 
