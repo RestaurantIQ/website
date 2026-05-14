@@ -811,6 +811,8 @@ export default function Home() {
           background: #000;
           transform-origin: bottom right;
           transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+          display: flex;
+          flex-direction: column;
         }
 
         .widget-panel.open {
@@ -825,11 +827,61 @@ export default function Home() {
           pointer-events: none;
         }
 
+        .widget-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 16px;
+          height: 52px;
+          background: #1d1d1f;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          flex-shrink: 0;
+        }
+
+        .widget-header-title {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .widget-header-title img {
+          height: 22px;
+          width: auto;
+          filter: brightness(0) invert(1);
+          opacity: 0.9;
+        }
+
+        .widget-header-title span {
+          font-size: 13px;
+          font-weight: 500;
+          color: rgba(255,255,255,0.75);
+          letter-spacing: -0.01em;
+        }
+
+        .widget-close {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.1);
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.15s;
+          flex-shrink: 0;
+        }
+
+        .widget-close:hover {
+          background: rgba(255,255,255,0.18);
+        }
+
         .widget-iframe {
           width: 100%;
-          height: 100%;
+          flex: 1;
           border: none;
           display: block;
+          min-height: 0;
         }
 
         @media (max-width: 480px) {
@@ -842,11 +894,6 @@ export default function Home() {
           }
           .widget-btn {
             bottom: 20px;
-            right: 16px;
-          }
-          .widget-btn.is-open {
-            bottom: auto;
-            top: 16px;
             right: 16px;
           }
         }
@@ -1101,6 +1148,17 @@ export default function Home() {
 
       {/* ── CHAT WIDGET ── */}
       <div className={`widget-panel ${widgetOpen ? 'open' : 'closed'}`}>
+        <div className="widget-header">
+          <div className="widget-header-title">
+            <img src="/logo.png" alt="RestaurantIQ" />
+            <span>Demo ausprobieren</span>
+          </div>
+          <button className="widget-close" onClick={() => setWidgetOpen(false)} aria-label="Chat schließen">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M1 1l10 10M11 1L1 11" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </button>
+        </div>
         {widgetOpen && (
           <iframe
             className="widget-iframe"
@@ -1112,7 +1170,7 @@ export default function Home() {
       </div>
 
       <button
-        className={`widget-btn${widgetOpen ? ' is-open' : ''}`}
+        className="widget-btn"
         onClick={() => setWidgetOpen(o => !o)}
         aria-label={widgetOpen ? 'Chat schließen' : 'Demo ausprobieren'}
       >
