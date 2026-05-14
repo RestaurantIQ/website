@@ -1090,7 +1090,7 @@ export default function Home() {
             <li><a href="/datenschutz">Datenschutz</a></li>
             <li><a href="mailto:team.restaurantiq@gmail.com">team.restaurantiq@gmail.com</a></li>
           </ul>
-          <div className="footer-copy">© 2026 Zielbauer &amp; Winkler GbR · RestaurantIQ</div>
+          <div className="footer-copy">© 2026 Benjamin Zielbauer · RestaurantIQ</div>
         </div>
       </footer>
 
