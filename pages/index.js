@@ -5,6 +5,7 @@ export default function Home() {
   const [form, setForm] = useState({ restaurant: '', email: '', message: '' });
   const [status, setStatus] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [widgetOpen, setWidgetOpen] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -765,6 +766,85 @@ export default function Home() {
           padding-top: 24px;
           border-top: 1px solid rgba(255,255,255,0.08);
         }
+
+        /* ── WIDGET ── */
+        .widget-btn {
+          position: fixed;
+          bottom: 28px;
+          right: 28px;
+          z-index: 9000;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          background: #1d1d1f;
+          border: none;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 1px 4px rgba(0,0,0,0.15);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .widget-btn:hover {
+          transform: scale(1.06);
+          box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+        }
+
+        .widget-btn svg {
+          width: 22px;
+          height: 22px;
+          fill: #fff;
+          transition: opacity 0.15s;
+        }
+
+        .widget-panel {
+          position: fixed;
+          bottom: 96px;
+          right: 28px;
+          z-index: 8999;
+          width: 380px;
+          height: 620px;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.06);
+          background: #000;
+          transform-origin: bottom right;
+          transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .widget-panel.open {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+          pointer-events: all;
+        }
+
+        .widget-panel.closed {
+          opacity: 0;
+          transform: scale(0.92) translateY(12px);
+          pointer-events: none;
+        }
+
+        .widget-iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+          display: block;
+        }
+
+        @media (max-width: 480px) {
+          .widget-panel {
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100svh;
+            border-radius: 0;
+          }
+          .widget-btn {
+            bottom: 20px;
+            right: 16px;
+          }
+        }
       `}</style>
 
       {/* ── NAV ── */}
@@ -1018,6 +1098,30 @@ export default function Home() {
           <div className="footer-copy">© 2026 Zielbauer &amp; Winkler GbR · RestaurantIQ</div>
         </div>
       </footer>
+
+      {/* ── CHAT WIDGET ── */}
+      <div className={`widget-panel ${widgetOpen ? 'open' : 'closed'}`}>
+        {widgetOpen && (
+          <iframe
+            className="widget-iframe"
+            src="https://restaurant-iq-demo.vercel.app/demo?restaurant=RestaurantIQ+Demo"
+            title="RestaurantIQ Demo"
+            allow="autoplay"
+          />
+        )}
+      </div>
+
+      <button
+        className="widget-btn"
+        onClick={() => setWidgetOpen(o => !o)}
+        aria-label={widgetOpen ? 'Chat schließen' : 'Demo ausprobieren'}
+      >
+        {widgetOpen ? (
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none"/></svg>
+        ) : (
+          <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 00-2 2v18l4-4h14a2 2 0 002-2V4a2 2 0 00-2-2z"/></svg>
+        )}
+      </button>
     </>
   );
 }
