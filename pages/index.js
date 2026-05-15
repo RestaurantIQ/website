@@ -149,6 +149,7 @@ export default function Home() {
       if (entry.isIntersecting && !phoneSplitDone.current) {
         phoneSplitDone.current = true;
         setTimeout(() => el.classList.add('split'), 100);
+        setTimeout(() => el.classList.add('floating'), 1200);
       }
     }, { threshold: 0.25 });
     obs.observe(el);
@@ -240,7 +241,7 @@ export default function Home() {
           --r:      12px;
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-anchor: none; }
         body {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           color: var(--ink); background: var(--bg);
@@ -467,8 +468,10 @@ export default function Home() {
         .pw-bad  { transform: translateX(24px); }
         .pw-good { transform: translateX(-24px); }
 
-        .phones-wrap.split .pw-bad  { animation: phone-float-l 5s ease-in-out infinite; }
-        .phones-wrap.split .pw-good { animation: phone-float-r 5s ease-in-out infinite 0.6s; }
+        .phones-wrap.split .pw-bad  { transform: translateX(-56px) rotate(-5deg); }
+        .phones-wrap.split .pw-good { transform: translateX(56px) rotate(5deg); }
+        .phones-wrap.floating .pw-bad  { animation: phone-float-l 5s ease-in-out infinite; }
+        .phones-wrap.floating .pw-good { animation: phone-float-r 5s ease-in-out infinite 0.6s; }
 
         /* VS badge */
         .phone-vs {
