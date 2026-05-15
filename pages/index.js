@@ -25,6 +25,16 @@ const STATS = [
   { value: '1 Tag', label: 'Bis zum Start' },
 ];
 
+const FAQ_ITEMS = [
+  { q: 'Muss ich technisches Wissen mitbringen?', a: 'Nein. Wir richten alles für Sie ein. Sie bekommen einen Link zum Chat-Widget das Sie einfach auf Ihrer Website einbinden. Das war es.' },
+  { q: 'Funktioniert das mit jeder Website?', a: 'Ja. Das Widget lässt sich auf jede Website einbinden, egal ob WordPress, Squarespace, Wix oder eine selbst gebaute Seite.' },
+  { q: 'Was passiert wenn ein Gast auf WhatsApp schreibt?', a: 'Das Widget ist ein Chat auf Ihrer Website. Aus Ihrer Benachrichtigungs-E-Mail heraus können Sie den Gast mit einem Klick direkt auf WhatsApp kontaktieren, ohne die Nummer abzutippen.' },
+  { q: 'Was wenn die KI mal falsch antwortet?', a: 'Sie bestätigen jede Anfrage manuell per E-Mail. Die KI nimmt die Daten auf, die finale Entscheidung liegt immer bei Ihnen.' },
+  { q: 'Wie läuft die Kündigung ab?', a: 'Quartalsweise per E-Mail. Keine Fristen, kein Kleingedrucktes. Eine kurze Nachricht reicht.' },
+  { q: 'Kann ich Verfügbarkeiten selbst anpassen?', a: 'Ja. Im Dashboard legen Sie fest wann und wie viele Tische frei sind. Einzelne Schichten oder ganze Tage lassen sich sofort sperren.' },
+  { q: 'Was kostet der erste Monat?', a: 'Nichts. Der erste Monat ist kostenlos, ohne Kreditkarte. Erst ab Monat 2 werden 59 € fällig, wenn Sie weitermachen möchten.' },
+];
+
 function IconChat() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
@@ -89,10 +99,15 @@ export default function Home() {
   const [status, setStatus] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [anfragen, setAnfragen] = useState(10);
+  const [bon, setBon] = useState(60);
+  const [faqOpen, setFaqOpen] = useState(null);
 
   const dashRef = useRef(null);
   const chatRef = useRef(null);
   const chatAnimated = useRef(false);
+
+  const verlust = Math.round(anfragen * 4.3 * 0.25 * bon);
 
   useEffect(() => {
     const fn = () => setNavScrolled(window.scrollY > 10);
@@ -162,12 +177,19 @@ export default function Home() {
     setStatus(res.ok ? 'sent' : 'error');
   }
 
+  function toggleFaq(i) {
+    setFaqOpen(prev => prev === i ? null : i);
+  }
+
   return (
     <>
       <Head>
         <title>RestaurantIQ – KI-Reservierungssystem für Restaurants</title>
         <meta name="description" content="RestaurantIQ beantwortet Reservierungsanfragen automatisch. Per KI, auf Deutsch, direkt auf Ihrer Website. Sie bestätigen mit einem Klick." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content="RestaurantIQ – KI-Reservierungssystem für Restaurants" />
+        <meta property="og:description" content="Keine verpassten Anfragen mehr. Der KI-Assistent antwortet 24/7, Sie bestätigen mit einem Klick." />
+        <meta property="og:type" content="website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -291,9 +313,56 @@ export default function Home() {
           padding: 8px 18px; border-radius: 980px;
           font-size: 13px !important; font-weight: 600 !important;
           white-space: nowrap; transition: opacity 0.15s !important;
+          text-decoration: none;
         }
         .nav-cta:hover { opacity: 0.85; }
-        @media (max-width: 680px) { .nav-links { display: none; } }
+
+        /* ── HAMBURGER ── */
+        .nav-hamburger {
+          display: none; background: none; border: none; cursor: pointer;
+          flex-direction: column; align-items: center; justify-content: center;
+          gap: 5px; padding: 8px; width: 40px; height: 40px; flex-shrink: 0;
+        }
+        .nav-hamburger span {
+          display: block; width: 18px; height: 1.5px;
+          background: rgba(255,255,255,0.75); border-radius: 2px;
+          transition: transform 0.22s ease, opacity 0.15s ease;
+        }
+        .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+        .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        @media (max-width: 680px) {
+          .nav-links { display: none; }
+          .nav-cta { display: none; }
+          .nav-hamburger { display: flex; }
+        }
+
+        /* ── MOBILE MENU ── */
+        .mobile-menu {
+          position: fixed; top: 56px; left: 0; right: 0; z-index: 99;
+          background: rgba(0,0,0,0.97);
+          backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+          padding: 8px 24px 28px;
+          transform: translateY(-6px); opacity: 0;
+          transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease;
+          pointer-events: none;
+        }
+        .mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+        .mobile-menu a {
+          display: block; font-size: 17px; font-weight: 400;
+          color: rgba(255,255,255,0.65); text-decoration: none;
+          padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+          transition: color 0.15s;
+        }
+        .mobile-menu a:hover { color: #fff; }
+        .mobile-menu-cta {
+          display: block; text-align: center; margin-top: 20px;
+          padding: 14px 24px; border-radius: 980px;
+          font-size: 15px; font-weight: 600;
+          background: #fff; color: #000 !important;
+          text-decoration: none; border-bottom: none !important;
+        }
 
         /* ── SECTIONS ── */
         section { width: 100%; }
@@ -542,17 +611,63 @@ export default function Home() {
           transform: translateY(-3px);
           box-shadow: 0 8px 32px rgba(0,0,0,0.07);
         }
-        .card-icon {
-          width: 40px; height: 40px; border-radius: 10px;
-          background: var(--bg-alt); border: 1px solid var(--line);
-          display: flex; align-items: center; justify-content: center;
-          margin-bottom: 18px; color: var(--ink);
-        }
         .card-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.01em; }
         .card p { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; }
 
+        /* ── ROI RECHNER ── */
+        .roi { padding: 80px 0; background: var(--bg); }
+        .roi-card {
+          background: var(--bg-alt); border: 1px solid var(--line);
+          border-radius: 16px; padding: 44px 48px;
+          max-width: 700px; margin: 48px auto 0;
+        }
+        @media (max-width: 600px) { .roi-card { padding: 32px 24px; } }
+        .roi-group { margin-bottom: 32px; }
+        .roi-row {
+          display: flex; justify-content: space-between; align-items: baseline;
+          margin-bottom: 14px; gap: 16px;
+        }
+        .roi-label { font-size: 14px; font-weight: 400; color: var(--ink-2); }
+        .roi-val { font-size: 16px; font-weight: 700; color: var(--ink); }
+        input[type=range].roi-slider {
+          width: 100%; height: 2px; border-radius: 2px;
+          background: var(--line); appearance: none; -webkit-appearance: none;
+          cursor: pointer; outline: none;
+        }
+        input[type=range].roi-slider::-webkit-slider-thumb {
+          -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+          background: var(--ink); cursor: pointer;
+          box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+        }
+        input[type=range].roi-slider::-moz-range-thumb {
+          width: 20px; height: 20px; border-radius: 50%;
+          background: var(--ink); cursor: pointer; border: none;
+        }
+        .roi-result {
+          padding-top: 32px; border-top: 1px solid var(--line);
+          display: flex; gap: 24px; align-items: center;
+          justify-content: space-between; flex-wrap: wrap;
+        }
+        .roi-result-label {
+          font-size: 11px; color: var(--muted); text-transform: uppercase;
+          letter-spacing: 0.08em; margin-bottom: 8px;
+        }
+        .roi-result-value {
+          font-size: clamp(32px, 4.5vw, 48px); font-weight: 700;
+          letter-spacing: -0.03em; color: var(--ink); line-height: 1;
+        }
+        .roi-result-sub { font-size: 12px; color: var(--muted); margin-top: 6px; }
+        .roi-cta {
+          display: inline-block; padding: 12px 24px; border-radius: 980px;
+          font-size: 14px; font-weight: 600;
+          background: var(--ink); color: #fff;
+          text-decoration: none; white-space: nowrap;
+          transition: opacity 0.15s; flex-shrink: 0;
+        }
+        .roi-cta:hover { opacity: 0.8; }
+
         /* ── HOW IT WORKS ── */
-        .how { padding: 100px 0; background: var(--bg); }
+        .how { padding: 100px 0; background: var(--bg-alt); }
         .steps {
           display: grid; grid-template-columns: repeat(3, 1fr);
           gap: 0; margin-top: 56px; position: relative;
@@ -597,7 +712,7 @@ export default function Home() {
         }
 
         /* ── FEATURES ── */
-        .features { padding: 100px 0; background: var(--bg-alt); }
+        .features { padding: 100px 0; background: var(--bg); }
         .features-grid {
           display: grid; grid-template-columns: repeat(3, 1fr);
           gap: 1px; background: var(--line);
@@ -622,6 +737,33 @@ export default function Home() {
         }
         .feature-title { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.01em; }
         .feature p { font-size: 13.5px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+        /* ── VERGLEICH ── */
+        .vergleich { padding: 100px 0; background: var(--bg-alt); }
+        .vergleich-grid {
+          display: grid; grid-template-columns: 1fr 1fr;
+          gap: 16px; margin-top: 56px;
+        }
+        @media (max-width: 640px) { .vergleich-grid { grid-template-columns: 1fr; } }
+        .vergleich-col {
+          border-radius: 12px; padding: 28px 32px; background: var(--bg);
+        }
+        .vergleich-bad { border: 1px solid #f0d0d0; }
+        .vergleich-good { border: 1px solid rgba(168,134,74,0.45); }
+        .vergleich-head {
+          font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+          text-transform: uppercase; margin-bottom: 20px;
+          padding-bottom: 16px; border-bottom: 1px solid var(--line);
+        }
+        .vergleich-bad .vergleich-head { color: #c0392b; }
+        .vergleich-good .vergleich-head { color: var(--gold); }
+        .vergleich-item {
+          display: flex; align-items: flex-start; gap: 10px;
+          font-size: 14px; font-weight: 300; color: var(--ink-2);
+          line-height: 1.6; padding: 10px 0;
+        }
+        .vergleich-item + .vergleich-item { border-top: 1px solid var(--line); }
+        .vi-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; line-height: 1.6; }
 
         /* ── DASHBOARD ── */
         .dashboard { padding: 100px 0 120px; background: #080808; position: relative; overflow: hidden; }
@@ -715,7 +857,11 @@ export default function Home() {
         .price-name { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 10px; }
         .price-amount {
           font-size: 64px; font-weight: 700; color: #fff;
-          line-height: 1; margin-bottom: 4px; letter-spacing: -0.04em;
+          line-height: 1; letter-spacing: -0.04em;
+        }
+        .price-per-day {
+          font-size: 13px; color: rgba(255,255,255,0.3);
+          margin-top: 4px; margin-bottom: 4px;
         }
         .price-period { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
         .price-setup { font-size: 12px; color: rgba(255,255,255,0.3); margin-bottom: 32px; }
@@ -748,8 +894,8 @@ export default function Home() {
         }
         .btn-price-gold:hover { opacity: 0.9; }
         .pricing-notes {
-          display: flex; justify-content: center; gap: 28px;
-          margin-top: 20px; flex-wrap: wrap;
+          display: flex; justify-content: center; gap: 20px;
+          margin-top: 16px; flex-wrap: wrap;
         }
         .pricing-note-item {
           font-size: 12px; color: var(--muted);
@@ -759,9 +905,52 @@ export default function Home() {
           width: 4px; height: 4px; border-radius: 50%;
           background: var(--muted); flex-shrink: 0;
         }
+        .trust-badges {
+          display: flex; flex-wrap: wrap; justify-content: center;
+          gap: 10px; margin-top: 24px;
+        }
+        .trust-badge {
+          display: flex; align-items: center; gap: 6px;
+          font-size: 11px; color: var(--muted); font-weight: 400;
+          background: var(--bg-alt); border: 1px solid var(--line);
+          padding: 6px 12px; border-radius: 999px;
+        }
+
+        /* ── FAQ ── */
+        .faq { padding: 100px 0; background: var(--bg-alt); }
+        .faq-list {
+          margin-top: 56px;
+          border-top: 1px solid var(--line);
+          max-width: 720px;
+        }
+        .faq-item { border-bottom: 1px solid var(--line); }
+        .faq-btn {
+          width: 100%; background: none; border: none; cursor: pointer;
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 22px 0; text-align: left; gap: 24px;
+        }
+        .faq-q { font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.45; }
+        .faq-chevron {
+          width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+          border: 1px solid var(--line);
+          display: flex; align-items: center; justify-content: center;
+          transition: background 0.15s, border-color 0.15s, transform 0.2s;
+        }
+        .faq-chevron svg { width: 10px; height: 10px; transition: stroke 0.15s; }
+        .faq-item.open .faq-chevron {
+          background: var(--ink); border-color: var(--ink);
+          transform: rotate(180deg);
+        }
+        .faq-item.open .faq-chevron svg { stroke: #fff !important; }
+        .faq-answer {
+          font-size: 14px; font-weight: 300; color: var(--muted);
+          line-height: 1.75; overflow: hidden;
+          max-height: 0; transition: max-height 0.3s ease, padding-bottom 0.3s ease;
+        }
+        .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 22px; }
 
         /* ── CONTACT ── */
-        .contact { padding: 100px 0; background: var(--bg-alt); }
+        .contact { padding: 100px 0; background: var(--bg); }
         .contact-inner {
           display: grid; grid-template-columns: 1fr 1fr;
           gap: 80px; align-items: start;
@@ -770,7 +959,7 @@ export default function Home() {
         .contact-channels { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
         .contact-channel {
           display: flex; align-items: center; gap: 14px;
-          background: var(--bg); border: 1px solid var(--line);
+          background: var(--bg-alt); border: 1px solid var(--line);
           border-radius: var(--r); padding: 16px 20px;
           text-decoration: none;
           transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
@@ -798,7 +987,7 @@ export default function Home() {
         }
         .field input, .field textarea {
           font-family: 'Inter', sans-serif; font-size: 15px;
-          font-weight: 300; color: var(--ink); background: var(--bg);
+          font-weight: 300; color: var(--ink); background: var(--bg-alt);
           border: 1px solid var(--line); border-radius: 8px;
           padding: 12px 16px; outline: none;
           transition: border-color 0.15s; resize: none;
@@ -884,12 +1073,28 @@ export default function Home() {
           <ul className="nav-links">
             <li><a href="#wie-es-funktioniert">Wie es funktioniert</a></li>
             <li><a href="#preise">Preise</a></li>
-            <li><a href="/faq">FAQ</a></li>
+            <li><a href="#faq">FAQ</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
           </ul>
+          <button
+            className={`nav-hamburger${menuOpen ? ' open' : ''}`}
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label="Menü"
+          >
+            <span /><span /><span />
+          </button>
           <a href="#kontakt" className="nav-cta">Demo anfragen</a>
         </div>
       </nav>
+
+      {/* ── MOBILE MENU ── */}
+      <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
+        <a href="#wie-es-funktioniert" onClick={() => setMenuOpen(false)}>Wie es funktioniert</a>
+        <a href="#preise" onClick={() => setMenuOpen(false)}>Preise</a>
+        <a href="#faq" onClick={() => setMenuOpen(false)}>FAQ</a>
+        <a href="#kontakt" onClick={() => setMenuOpen(false)}>Kontakt</a>
+        <a href="#kontakt" onClick={() => setMenuOpen(false)} className="mobile-menu-cta">Demo anfragen</a>
+      </div>
 
       {/* ── HERO ── */}
       <section className="hero">
@@ -974,6 +1179,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── ROI RECHNER ── */}
+      <section className="roi">
+        <div className="container">
+          <div className="section-label reveal">Ihr Verlust</div>
+          <h2 className="section-title reveal d1">Was kostet Sie der Status quo?</h2>
+          <div className="roi-card reveal d2">
+            <div className="roi-group">
+              <div className="roi-row">
+                <span className="roi-label">Reservierungsanfragen pro Woche</span>
+                <span className="roi-val">{anfragen}</span>
+              </div>
+              <input
+                type="range" className="roi-slider"
+                min={1} max={60} value={anfragen}
+                onChange={e => setAnfragen(+e.target.value)}
+              />
+            </div>
+            <div className="roi-group">
+              <div className="roi-row">
+                <span className="roi-label">Durchschnittlicher Umsatz pro Tisch</span>
+                <span className="roi-val">€{bon}</span>
+              </div>
+              <input
+                type="range" className="roi-slider"
+                min={20} max={300} step={10} value={bon}
+                onChange={e => setBon(+e.target.value)}
+              />
+            </div>
+            <div className="roi-result">
+              <div>
+                <div className="roi-result-label">Geschätzter Verlust pro Monat</div>
+                <div className="roi-result-value">€{verlust.toLocaleString('de-DE')}</div>
+                <div className="roi-result-sub">bei 25 % unbeantworteten Anfragen</div>
+              </div>
+              <a href="#kontakt" className="roi-cta">Für 59 € lösen</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── HOW IT WORKS ── */}
       <section className="how" id="wie-es-funktioniert">
         <div className="container">
@@ -1017,6 +1262,46 @@ export default function Home() {
                 <p>{f.text}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── VERGLEICH ── */}
+      <section className="vergleich">
+        <div className="container">
+          <div className="section-label reveal">Vorher / Nachher</div>
+          <h2 className="section-title reveal d1">Was sich konkret ändert.</h2>
+          <div className="vergleich-grid">
+            <div className="vergleich-col vergleich-bad reveal d1">
+              <div className="vergleich-head">Ohne RestaurantIQ</div>
+              {[
+                'Anfragen nach Feierabend bleiben unbeantwortet',
+                'Reservierungen gehen in WhatsApp und Zetteln verloren',
+                'Kein Überblick über kommende Buchungen',
+                'Doppelbuchungen durch manuelle Verwaltung möglich',
+                'Gäste buchen beim Konkurrenten der antwortet',
+              ].map((t, i) => (
+                <div key={i} className="vergleich-item">
+                  <span className="vi-icon">✗</span>
+                  <span>{t}</span>
+                </div>
+              ))}
+            </div>
+            <div className="vergleich-col vergleich-good reveal d2">
+              <div className="vergleich-head">Mit RestaurantIQ</div>
+              {[
+                '24/7 erreichbar, auch um Mitternacht',
+                'Alle Anfragen gesammelt im Dashboard',
+                'Kalender mit Echtzeit-Verfügbarkeit',
+                'Automatische Bestätigung an den Gast',
+                'Keine Anfrage geht mehr verloren',
+              ].map((t, i) => (
+                <div key={i} className="vergleich-item">
+                  <span className="vi-icon">✓</span>
+                  <span>{t}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1080,6 +1365,7 @@ export default function Home() {
                 <div className="price-badge">Alles inklusive</div>
                 <div className="price-name">Monatliche Pauschale</div>
                 <div className="price-amount">59€</div>
+                <div className="price-per-day">= 1,97 € pro Tag</div>
                 <div className="price-period">pro Monat, quartalsweise kündbar</div>
                 <div className="price-setup">zzgl. 199 € Einrichtung (einmalig)</div>
                 <div className="price-divider" />
@@ -1105,6 +1391,35 @@ export default function Home() {
                 </span>
               ))}
             </div>
+            <div className="trust-badges">
+              <span className="trust-badge">🔒 SSL-verschlüsselt</span>
+              <span className="trust-badge">🇩🇪 DSGVO-konform</span>
+              <span className="trust-badge">⚡ Setup in 24h</span>
+              <span className="trust-badge">✓ Kein technisches Wissen nötig</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="faq" id="faq">
+        <div className="container">
+          <div className="section-label reveal">Häufige Fragen</div>
+          <h2 className="section-title reveal d1">Alles Wichtige auf einen Blick.</h2>
+          <div className="faq-list reveal d2">
+            {FAQ_ITEMS.map((item, i) => (
+              <div key={i} className={`faq-item${faqOpen === i ? ' open' : ''}`}>
+                <button className="faq-btn" onClick={() => toggleFaq(i)}>
+                  <span className="faq-q">{item.q}</span>
+                  <span className="faq-chevron">
+                    <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M1 1l4 4 4-4" />
+                    </svg>
+                  </span>
+                </button>
+                <div className="faq-answer">{item.a}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -1182,7 +1497,7 @@ export default function Home() {
           <ul className="footer-links">
             <li><a href="/impressum">Impressum</a></li>
             <li><a href="/datenschutz">Datenschutz</a></li>
-            <li><a href="/faq">FAQ</a></li>
+            <li><a href="#faq">FAQ</a></li>
             <li><a href="mailto:team.restaurantiq@gmail.com">team.restaurantiq@gmail.com</a></li>
           </ul>
           <div className="footer-copy">© 2026 Benjamin Zielbauer · RestaurantIQ</div>
